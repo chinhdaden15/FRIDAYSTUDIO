@@ -136,10 +136,3 @@ export interface AISettings {
   modelCount?: number;
 }
 
-export interface MusicSettings {
-  enabled: boolean;
-  volume: number;
-  source: string;
-  userHasChosen: boolean;
-}
-

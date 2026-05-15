@@ -28,7 +28,6 @@ export const viewport = {
 };
 
 import { ToastProvider } from "@/components/ToastProvider";
-import { MusicProvider } from "@/components/MusicProvider";
 
 export default function RootLayout({
   children,
@@ -39,15 +38,13 @@ export default function RootLayout({
     <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ToastProvider>
-          <MusicProvider>
-            <div className="fixed top-0 left-0 right-0 bg-warning/10 border-b border-warning/20 text-warning/90 text-[11px] text-center py-1.5 px-4 z-50 flex items-center justify-center font-medium">
-              ⚠️ Kết quả chỉ mang tính phân tích tham khảo, không đảm bảo trúng thưởng.
-            </div>
-            <main className="flex-1 pb-20 pt-8 max-w-md mx-auto w-full relative">
-              {children}
-            </main>
-            <BottomNav />
-          </MusicProvider>
+          <div className="fixed top-0 left-0 right-0 bg-warning/10 border-b border-warning/20 text-warning/90 text-[11px] text-center py-1.5 px-4 z-50 flex items-center justify-center font-medium">
+            ⚠️ Kết quả chỉ mang tính phân tích tham khảo, không đảm bảo trúng thưởng.
+          </div>
+          <main className="flex-1 pb-20 pt-8 max-w-md mx-auto w-full relative">
+            {children}
+          </main>
+          <BottomNav />
         </ToastProvider>
       </body>
     </html>

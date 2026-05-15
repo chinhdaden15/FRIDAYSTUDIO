@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Settings, Trash2, Key, Shield, Database, RefreshCcw, Search, ChevronDown, Check, AlertCircle, Loader2, Music, Volume2, Play } from "lucide-react";
+import { Settings, Trash2, Key, Shield, Database, RefreshCcw, Search, ChevronDown, Check, AlertCircle, Loader2 } from "lucide-react";
 import { getStorageItem, setStorageItem, clearAllData } from "@/lib/storage";
 import { OpenAIModelInfo, AISettings } from "@/lib/types";
 import clsx from "clsx";
 import ConfirmModal from "@/components/ConfirmModal";
 import { useToast } from "@/components/ToastProvider";
-import { useMusic } from "@/components/MusicProvider";
 
 const FALLBACK_MODELS: OpenAIModelInfo[] = [
   "gpt-5.5", "gpt-5.5-pro", "gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano", 
@@ -25,7 +24,6 @@ export default function SettingsPage() {
   });
   
   const { toast } = useToast();
-  const { settings: musicSettings, updateSettings: updateMusicSettings, isPlaying, playMusic, pauseMusic, toggleMusic } = useMusic();
   const [confirmClearData, setConfirmClearData] = useState(false);
   const [confirmResetHistory, setConfirmResetHistory] = useState(false);
   
@@ -403,58 +401,6 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Sound Settings */}
-        <div className="bg-card-bg border border-card-border rounded-2xl p-4 space-y-5">
-          <h2 className="text-sm font-semibold text-gray-300 flex items-center gap-2 border-b border-card-border pb-3">
-            <Music size={16} className="text-blue-400" />
-            Âm thanh
-          </h2>
-
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">Nhạc nền</span>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input 
-                type="checkbox" 
-                className="sr-only peer"
-                checked={musicSettings.enabled}
-                onChange={() => toggleMusic()}
-              />
-              <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-            </label>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-xs text-gray-400 font-medium flex items-center gap-2">
-                <Volume2 size={14} />
-                Âm lượng
-              </label>
-              <span className="text-xs text-blue-400 font-medium">{Math.round(musicSettings.volume * 100)}%</span>
-            </div>
-            <input 
-              type="range" 
-              min="0" 
-              max="1" 
-              step="0.05"
-              value={musicSettings.volume}
-              onChange={(e) => updateMusicSettings({ volume: parseFloat(e.target.value) })}
-              className="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
-            />
-          </div>
-
-          <div className="flex justify-between items-center pt-2 border-t border-card-border">
-            <p className="text-[10px] text-gray-500 max-w-[200px] leading-relaxed">
-              Nhạc nền mặc định bật. Nếu trình duyệt chặn tự phát, hãy chạm vào nút nhạc để phát.
-            </p>
-            <button
-              onClick={() => isPlaying ? pauseMusic() : playMusic()}
-              className="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs px-3 py-2 rounded-xl font-medium transition-colors flex items-center gap-1.5 shrink-0"
-            >
-              {isPlaying ? <Music size={14} className="animate-pulse text-blue-400" /> : <Play size={14} />}
-              {isPlaying ? "Đang phát" : "Kiểm tra nhạc"}
-            </button>
-          </div>
-        </div>
 
         {/* Data Management */}
         <div className="bg-card-bg border border-card-border rounded-2xl p-4 space-y-3">
